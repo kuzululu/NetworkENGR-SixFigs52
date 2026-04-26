@@ -138,7 +138,7 @@ name chevronvlan
 exit
 int vlan 9
 no shut
-ip add 10.0.2.0 255.255.254.0
+ip add 10.0.2.1 255.255.254.0
 exit
 ip dhcp excluded-address 10.0.2.1 10.0.2.100
 ip dhcp pool chevron
