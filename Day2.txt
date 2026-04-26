@@ -114,3 +114,52 @@ D1: show
  !for check do bp
  end
  ===============New Client================
+ D1, A1, P1:
+ 
+ Telus.com 10.0.0.0/8
+ client: chevronvlan
+ 350 Agents
+ 
+ for SUbnet:
+ C: 350 is 9bits
+ S: /32 - /9 = /23 255.255.254.0
+ I: 3rd, 2i
+ subnet: 10.0.2.0/23
+ 1st: 10.0.2.1
+ lst: 10.0.3.254
+ bu: 10.0.3.255
+ NotYours: 10.0.4.0 
+ 
+ 
+@D1
+conf t
+vlan 9
+name chevronvlan
+exit
+int vlan 9
+no shut
+ip add 10.0.2.0 255.255.254.0
+exit
+ip dhcp excluded-address 10.0.2.1 10.0.2.100
+ip dhcp pool chevron
+network 10.0.2.0 255.255.254.0
+default-router 10.0.2.1
+end
+
+D1: show 
+
+@A1
+ conf t
+ int e0/0
+ no shut
+ switchport mode access
+ switchport access vlan 9
+ end
+ 
+@P1
+ conf t
+ int e0/0
+ no shut
+ ip add dhcp
+ 
+ end
