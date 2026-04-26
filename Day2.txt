@@ -1,0 +1,116 @@
+Realworld Deployment = 3/4 years experience
+
+@D1
+conf t
+vlan 11 
+name 1500wfh
+exit
+int vlan 11
+no shut
+ip add 172.16.8.1 255.255.248.0
+exit
+ip dhcp excluded-address 172.16.8.1 172.16.8.100
+ip dhcp pool 1500WFH
+network 172.16.8.0 255.255.248.0
+default-router 172.16.8.1
+end
+
+D1: show 
+
+@A1
+ conf t
+ int e0/0
+ no shut
+ switchport mode access
+ switchport access vlan 11
+ 
+@P1
+ conf t
+ int e0/0
+ no shut
+ ip add dhcp
+ do bp
+ ------------------------------------
+ 
+ @D1
+conf t
+vlan 6
+name 50wfh
+exit
+int vlan 6
+no shut
+ip add 172.16.0.65 255.255.255.192
+exit
+ip dhcp excluded-address 172.16.0.65 172.16.0.69
+ip dhcp pool 50WFH
+network 172.16.0.64 255.255.255.192
+default-router 172.16.0.65
+end
+
+D1: show 
+
+@A2z
+ conf t
+ int e1/0
+ no shut
+ switchport mode access
+ switchport access vlan 6
+ end
+ 
+@P2
+ conf t
+ int e1/0
+ no shut
+ ip add dhcp
+ 
+ end
+ 
+ IP Address
+ DO BP
+ Task 4: Real World Design and Implementaion
+ ITSM, Network Design, D1, D2, S2
+ Accenture.com 10.10.0.0/8 8500 Call
+ for SUbnet:
+ C: 8500 is 14bits
+ S: /32-/14 = /18
+ I: 3rd, 64i
+ subnet: 10.0.64.0/18
+ 1st: 10.0.64.1
+ lst: 10.0.127.254
+ bu: 10.0.127.255
+ 
+ 
+ 
+ @D1
+conf t
+vlan 14
+name accenturevlan
+exit
+int vlan 14
+no shut
+ip add 10.0.64.1 255.255.192.0
+exit
+ip dhcp excluded-address 10.0.64.1 10.0.64.100
+ip dhcp pool accenture
+network 10.0.64.0 255.255.192.0
+default-router 10.0.64.1
+end
+
+D1: show 
+
+@D2
+ conf t
+ int e1/0
+ no shut
+ switchport mode access
+ switchport access vlan 14
+ 
+@S2
+ conf t
+ int e1/0
+ no shut
+ ip add dhcp
+ 
+ !for check do bp
+ end
+ ===============New Client================
